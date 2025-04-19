@@ -1,14 +1,12 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import ChatWindow from '@/components/ChatWindow';
 import ChatInput from '@/components/ChatInput';
 import PageLayout from '@/components/PageLayout';
 import { useFiles } from '@/contexts/FileContext';
 import { Message } from '@/types/chat';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft } from 'lucide-react';
 
 interface ChatPageProps {
   logoUrl?: string;
@@ -47,7 +45,6 @@ const ChatPage = ({ logoUrl }: ChatPageProps) => {
     
     // Simulate AI response
     setTimeout(() => {
-      // Generate a simple response
       const aiResponse = generateMockResponse(content);
       
       const assistantMessage: Message = {
@@ -62,7 +59,6 @@ const ChatPage = ({ logoUrl }: ChatPageProps) => {
     }, 1500);
   };
   
-  // Mock response generator - would be replaced with actual API call
   const generateMockResponse = (query: string): string => {
     const responses = [
       `Based on the documents you've uploaded, I can provide information related to your query about "${query}".`,
@@ -76,22 +72,10 @@ const ChatPage = ({ logoUrl }: ChatPageProps) => {
 
   return (
     <PageLayout logoUrl={logoUrl} hideFooter>
-      <div className="flex flex-col h-full">
-        <div className="p-4 border-b bg-background/80 backdrop-blur-sm">
-          <div className="container mx-auto flex items-center justify-between">
-            <Button 
-              variant="ghost" 
-              size="sm"
-              onClick={() => navigate('/')}
-              className="flex items-center gap-1"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              <span>Back</span>
-            </Button>
-            
-            <div className="text-sm text-muted-foreground">
-              {uploadedFiles.length} document{uploadedFiles.length !== 1 ? 's' : ''} uploaded
-            </div>
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="container mx-auto p-4">
+          <div className="text-sm text-muted-foreground">
+            {uploadedFiles.length} document{uploadedFiles.length !== 1 ? 's' : ''} uploaded
           </div>
         </div>
         
@@ -99,15 +83,9 @@ const ChatPage = ({ logoUrl }: ChatPageProps) => {
           <ChatWindow messages={messages} isLoading={isLoading} />
           <ChatInput onSendMessage={handleSendMessage} disabled={isLoading} />
         </div>
-        
-        <div className="p-2 border-t">
-          <BrandFooter variant="minimal" />
-        </div>
       </div>
     </PageLayout>
   );
 };
-
-import BrandFooter from '@/components/BrandFooter';
 
 export default ChatPage;

@@ -18,8 +18,6 @@ const LandingPage = ({ logoUrl }: LandingPageProps) => {
   const navigate = useNavigate();
   
   const handleFilesUploaded = (files: File[]) => {
-    // Here you would typically have API logic to upload the files
-    // For now, we'll simulate it with a short delay
     addFiles(files);
     
     if (files.length > 0) {
@@ -44,16 +42,16 @@ const LandingPage = ({ logoUrl }: LandingPageProps) => {
   return (
     <PageLayout logoUrl={logoUrl}>
       <div className="flex-1 container max-w-6xl mx-auto py-12 px-4">
-        <div className="text-center mb-12 space-y-3 animate-fade-in-up">
+        <div className="text-center mb-12 space-y-3">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Document Chat Demo
+            Upload Your Documents
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Upload your documents and start chatting with them instantly using advanced AI
+            Start by uploading your documents to begin chatting with them using advanced AI
           </p>
         </div>
         
-        <div className="max-w-3xl mx-auto animate-fade-in" style={{ animationDelay: '100ms' }}>
+        <div className="max-w-3xl mx-auto">
           <FileUploader onFilesUploaded={handleFilesUploaded} />
           
           {uploadedFiles.length > 0 && (
@@ -62,7 +60,6 @@ const LandingPage = ({ logoUrl }: LandingPageProps) => {
                 size="lg" 
                 onClick={handleStartChatting}
                 disabled={isUploading}
-                className="animate-bounce-in"
               >
                 {isUploading ? 'Processing...' : 'Start Chatting'}
               </Button>
